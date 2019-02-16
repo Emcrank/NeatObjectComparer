@@ -48,5 +48,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyComparison.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="NeatObjectComparer.nuspec" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

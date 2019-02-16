@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>NeatObjectComparer</id>
+    <version>{AssemblyInfoVersion}</version>
+    <authors>Aaron Todd</authors>
+    <owners>Aaron Todd</owners>
+    <projectUrl>https://github.com/Emcrank/NeatObjectComparer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A library for comparing objects.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>Object comparer</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\NeatObjectComparer.dll" target="lib\net452"/>
+  </files>
+</package>
