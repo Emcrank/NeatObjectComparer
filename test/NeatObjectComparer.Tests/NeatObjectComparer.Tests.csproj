@@ -47,7 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NeatObjectComparer\NeatObjectComparer.csproj">
+    <ProjectReference Include="..\..\src\NeatObjectComparer\NeatObjectComparer.csproj">
       <Project>{a13dc0c5-a414-45dd-b5e5-c0b515a63b40}</Project>
       <Name>NeatObjectComparer</Name>
     </ProjectReference>
