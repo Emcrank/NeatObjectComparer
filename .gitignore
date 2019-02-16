@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/packages
+/.vs/NeatObjectComparer/v15
+/src/NeatObjectComparer/bin/Debug
+/src/NeatObjectComparer/obj/Debug
+/src/NeatObjectComparer.Tests/bin/Debug
+/src/NeatObjectComparer.Tests/obj/Debug
