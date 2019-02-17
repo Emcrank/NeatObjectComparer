@@ -46,6 +46,15 @@ namespace NeatObjectComparer
     /// <typeparam name="TSecond">Type of the second instance on which the property resides.</typeparam>
     public class PropertyComparison<TFirst, TSecond>
     {
+        /// <summary>
+        /// The delegate that is invoked to evaluate whether the property is equal.
+        /// Should return true if they are equal; otherwise false.
+        /// </summary>
+        /// <param name="firstInstance">The first instance.</param>
+        /// <param name="secondInstance">The second instance.</param>
+        /// <returns>Should return true if the properties are equal.</returns>
+        public delegate bool IsPropertyEqual(TFirst firstInstance, TSecond secondInstance);
+
         private static readonly Func<string, string, IsPropertyEqual> defaultIsPropertyEqual = (p1, p2) =>
         {
             return (x, y) =>
@@ -57,16 +66,6 @@ namespace NeatObjectComparer
         };
 
         private readonly IsPropertyEqual isPropertyEqual;
-
-        /// <summary>
-        /// Gets the <see cref="PropertyInfo" /> for the first instance's property.
-        /// </summary>
-        public PropertyInfo FirstPropertyInfo { get; }
-
-        /// <summary>
-        /// Gets the <see cref="PropertyInfo" /> for the second instance's property.
-        /// </summary>
-        public PropertyInfo SecondPropertyInfo { get; }
 
         /// <summary>
         /// Initializes an instance of <see cref="PropertyComparison{TFirst,TSecond}" />
@@ -104,11 +103,21 @@ namespace NeatObjectComparer
         }
 
         /// <summary>
+        /// Gets the <see cref="PropertyInfo" /> for the first instance's property.
+        /// </summary>
+        public PropertyInfo FirstPropertyInfo { get; }
+
+        /// <summary>
+        /// Gets the <see cref="PropertyInfo" /> for the second instance's property.
+        /// </summary>
+        public PropertyInfo SecondPropertyInfo { get; }
+
+        /// <summary>
         /// Gets property information for a specified property name.
         /// </summary>
         /// <typeparam name="T">The type on which the property resides.</typeparam>
         /// <param name="propertyName">The name of the property.</param>
-        /// <returns>An instance of <see cref="PropertyInfo"/> for the specified property.</returns>
+        /// <returns>An instance of <see cref="PropertyInfo" /> for the specified property.</returns>
         private static PropertyInfo GetPropertyInfo<T>(string propertyName)
         {
             var type = typeof(T);
@@ -127,7 +136,7 @@ namespace NeatObjectComparer
         /// <param name="secondInstance">The second instance.</param>
         public PropertyComparisonResult Compare(TFirst firstInstance, TSecond secondInstance)
         {
-            return new PropertyComparisonResult()
+            return new PropertyComparisonResult
             {
                 IsEqual = isPropertyEqual(firstInstance, secondInstance),
 
@@ -145,14 +154,5 @@ namespace NeatObjectComparer
                 SecondType = typeof(TSecond)
             };
         }
-
-        /// <summary>
-        /// The delegate that is invoked to evaluate whether the property is equal.
-        /// Should return true if they are equal; otherwise false.
-        /// </summary>
-        /// <param name="firstInstance">The first instance.</param>
-        /// <param name="secondInstance">The second instance.</param>
-        /// <returns>Should return true if the properties are equal.</returns>
-        public delegate bool IsPropertyEqual(TFirst firstInstance, TSecond secondInstance);
     }
 }

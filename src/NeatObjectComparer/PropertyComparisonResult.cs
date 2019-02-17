@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace NeatObjectComparer
 {
