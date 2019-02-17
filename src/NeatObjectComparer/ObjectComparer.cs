@@ -43,12 +43,9 @@ namespace NeatObjectComparer
         /// <param name="firstInstance">The first instance to compare.</param>
         /// <param name="secondInstance">The second instance to compare.</param>
         /// <returns>All instances of <see cref="PropertyComparison{TFirst,TSecond}" /> passed in the constructor.</returns>
-        public IEnumerable<PropertyComparison<TFirst, TSecond>> Compare(TFirst firstInstance, TSecond secondInstance)
+        public IEnumerable<PropertyComparisonResult> Compare(TFirst firstInstance, TSecond secondInstance)
         {
-            foreach(var propertyComparison in comparisons)
-                propertyComparison.Compare(firstInstance, secondInstance);
-
-            return comparisons;
+            return comparisons.Select(x => x.Compare(firstInstance, secondInstance));
         }
 
         /// <summary>
@@ -57,7 +54,7 @@ namespace NeatObjectComparer
         /// <param name="firstInstance">The first instance to compare.</param>
         /// <param name="secondInstance">The second instance to compare.</param>
         /// <returns>An IEnumerable of <see cref="PropertyComparison{TFirst,TSecond}" /> containing the differences.</returns>
-        public IEnumerable<PropertyComparison<TFirst, TSecond>> GetDifferences(TFirst firstInstance,
+        public IEnumerable<PropertyComparisonResult> GetDifferences(TFirst firstInstance,
             TSecond secondInstance)
         {
             return Compare(firstInstance, secondInstance).Where(x => x.HasDifference);
@@ -71,7 +68,7 @@ namespace NeatObjectComparer
         /// <param name="secondInstance">The second instance to compare.</param>
         /// <returns>A IDictionary of <see cref="PropertyComparison{TFirst,TSecond}" /> containing the differences.
         /// The key of each key value pair is the property name on the first instance.</returns>
-        public IDictionary<string, PropertyComparison<TFirst, TSecond>> GetDifferencesAsDict(TFirst firstInstance,
+        public IDictionary<string, PropertyComparisonResult> GetDifferencesAsDict(TFirst firstInstance,
             TSecond secondInstance)
         {
             return Compare(firstInstance, secondInstance)

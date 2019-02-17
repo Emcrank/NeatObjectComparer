@@ -59,6 +59,16 @@ namespace NeatObjectComparer
         private readonly IsPropertyEqual isPropertyEqual;
 
         /// <summary>
+        /// Gets the <see cref="PropertyInfo" /> for the first instance's property.
+        /// </summary>
+        public PropertyInfo FirstPropertyInfo { get; }
+
+        /// <summary>
+        /// Gets the <see cref="PropertyInfo" /> for the second instance's property.
+        /// </summary>
+        public PropertyInfo SecondPropertyInfo { get; }
+
+        /// <summary>
         /// Initializes an instance of <see cref="PropertyComparison{TFirst,TSecond}" />
         /// with the specified parameter.
         /// This constructor will use the default <code>obj.Equals</code>
@@ -94,41 +104,6 @@ namespace NeatObjectComparer
         }
 
         /// <summary>
-        /// Gets the first instance's property name.
-        /// </summary>
-        public string FirstPropertyName => FirstPropertyInfo.Name;
-
-        /// <summary>
-        /// Gets a value indicating whether the property values are equal.
-        /// </summary>
-        public bool IsEqual { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the property values have a difference.
-        /// </summary>
-        public bool HasDifference => !IsEqual;
-
-        /// <summary>
-        /// Gets the <see cref="PropertyInfo"/> for the first instance's property.
-        /// </summary>
-        public PropertyInfo FirstPropertyInfo { get; }
-
-        /// <summary>
-        /// Gets the <see cref="PropertyInfo"/> for the second instance's property.
-        /// </summary>
-        public PropertyInfo SecondPropertyInfo { get; }
-
-        /// <summary>
-        /// Gets the value for the first instances property.
-        /// </summary>
-        public dynamic SecondValue { get; private set; }
-
-        /// <summary>
-        /// Gets the value for the second instances property.
-        /// </summary>
-        public dynamic FirstValue { get; private set; }
-
-        /// <summary>
         /// Gets property information for a specified property name.
         /// </summary>
         /// <typeparam name="T">The type on which the property resides.</typeparam>
@@ -150,17 +125,25 @@ namespace NeatObjectComparer
         /// </summary>
         /// <param name="firstInstance">The first instance.</param>
         /// <param name="secondInstance">The second instance.</param>
-        public void Compare(TFirst firstInstance, TSecond secondInstance)
+        public PropertyComparisonResult Compare(TFirst firstInstance, TSecond secondInstance)
         {
-            IsEqual = isPropertyEqual(firstInstance, secondInstance);
+            return new PropertyComparisonResult()
+            {
+                IsEqual = isPropertyEqual(firstInstance, secondInstance),
 
-            FirstValue = Convert.ChangeType(
-                FirstPropertyInfo.GetValue(firstInstance),
-                FirstPropertyInfo.PropertyType);
+                FirstValue = Convert.ChangeType(
+                    FirstPropertyInfo.GetValue(firstInstance),
+                    FirstPropertyInfo.PropertyType),
 
-            SecondValue = Convert.ChangeType(
-                SecondPropertyInfo.GetValue(secondInstance),
-                SecondPropertyInfo.PropertyType);
+                SecondValue = Convert.ChangeType(
+                    SecondPropertyInfo.GetValue(secondInstance),
+                    SecondPropertyInfo.PropertyType),
+
+                FirstPropertyInfo = FirstPropertyInfo,
+                SecondPropertyInfo = SecondPropertyInfo,
+                FirstType = typeof(TFirst),
+                SecondType = typeof(TSecond)
+            };
         }
 
         /// <summary>
