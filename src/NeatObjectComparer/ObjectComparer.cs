@@ -64,6 +64,22 @@ namespace NeatObjectComparer
         }
 
         /// <summary>
+        /// Compares the two instances and returns the differences as a dictionary.
+        /// The key of each key value pair is the property name on the first instance.
+        /// </summary>
+        /// <param name="firstInstance">The first instance to compare.</param>
+        /// <param name="secondInstance">The second instance to compare.</param>
+        /// <returns>A IDictionary of <see cref="PropertyComparison{TFirst,TSecond}" /> containing the differences.
+        /// The key of each key value pair is the property name on the first instance.</returns>
+        public IDictionary<string, PropertyComparison<TFirst, TSecond>> GetDifferencesAsDict(TFirst firstInstance,
+            TSecond secondInstance)
+        {
+            return Compare(firstInstance, secondInstance)
+                .Where(x => x.HasDifference)
+                .ToDictionary(k => k.FirstPropertyName, v => v);
+        }
+
+        /// <summary>
         /// Compares the two instances and returns new instance of <see cref="T" />
         /// with only the different properties set.
         /// </summary>
