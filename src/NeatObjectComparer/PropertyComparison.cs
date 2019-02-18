@@ -61,7 +61,7 @@ namespace NeatObjectComparer
             {
                 var firstValue = GetPropertyInfo<TFirst>(p1).GetValue(x);
                 var secondValue = GetPropertyInfo<TSecond>(p2).GetValue(y);
-                return firstValue.Equals(secondValue);
+                return Equals(firstValue, secondValue);
             };
         };
 
