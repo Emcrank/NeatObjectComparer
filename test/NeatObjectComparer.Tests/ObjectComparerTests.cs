@@ -154,6 +154,24 @@ namespace NeatObjectComparer.Tests
             Assert.IsFalse(differences.Any());
         }
 
+        [TestMethod]
+        public void TwoTypes_DifferentPropertyNames_DefaultEqualityComparer()
+        {
+            var firstToCompare = new FirstToCompare { AProperty = "Test" };
+            var secondToCompare = new SecondToCompare { CProperty = "Test" };
+
+            var comparisons = new List<PropertyComparison<FirstToCompare, SecondToCompare>>
+            {
+                new PropertyComparison<FirstToCompare, SecondToCompare>(
+                    nameof(firstToCompare.AProperty), nameof(secondToCompare.CProperty))
+            };
+
+            var differences = new ObjectComparer<FirstToCompare, SecondToCompare>(comparisons)
+                .GetDifferences(firstToCompare, secondToCompare);
+
+            Assert.IsFalse(differences.Any());
+        }
+
         private class FirstToCompare
         {
             public string AProperty { get; set; }
@@ -166,6 +184,8 @@ namespace NeatObjectComparer.Tests
             public string AProperty { get; set; }
 
             public int BProperty { get; set; }
+
+            public string CProperty { get; set; }
         }
     }
 }

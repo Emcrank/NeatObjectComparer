@@ -80,6 +80,20 @@ namespace NeatObjectComparer
 
         /// <summary>
         /// Initializes an instance of <see cref="PropertyComparison{TFirst,TSecond}" />
+        /// with the specified parameter.
+        /// This constructor will use the default <code>obj.Equals</code>
+        /// method to evaluate equality.
+        /// </summary>
+        /// <param name="firstPropertyName">The name of the property on the first instance.</param>
+        /// <param name="secondPropertyName">The name of the property on the second instance.</param>
+        public PropertyComparison(string firstPropertyName, string secondPropertyName)
+            : this(
+                firstPropertyName,
+                secondPropertyName,
+                defaultIsPropertyEqual(firstPropertyName, secondPropertyName)) { }
+
+        /// <summary>
+        /// Initializes an instance of <see cref="PropertyComparison{TFirst,TSecond}" />
         /// with the specified parameters.
         /// </summary>
         /// <param name="propertyName">The name of the property. If its named differently on both types, use other constructor.</param>
